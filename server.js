@@ -18,12 +18,11 @@ app.use('/peerjs',peerServer);
 app.get('/:room',(req,res)=>{
     res.render('room.ejs',{roomId :req.params.room});
 })
-server.listen('3030',()=>{
-    console.log('rrr');
-});
+
 io.on('connection', socket =>{
     socket.on('join-room', (roomId,userId)=>{
         socket.join(roomId);
        socket.to(roomId).broadcast.emit('user-connected',userId);
     })
 })
+server.listen(process.env.PORT||3030)
